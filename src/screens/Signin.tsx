@@ -3,6 +3,7 @@ import {Heading, Icon, VStack, useTheme } from "native-base";
 import { Envelope, Key } from "phosphor-react-native";
 
 import Logo from "../assets/logo_primary.svg";
+import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
 export function SignIn () {
@@ -20,10 +21,13 @@ export function SignIn () {
           InputLeftElement={<Icon as={<Envelope color={colors.gray[300]} />} ml={4}/>}
             placeholder="E-mail"/>
            <Input 
+           mb={8}
             InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4}/>}
            placeholder="Contraseña"
            secureTextEntry
            />
+
+           <Button title="Entrar" w="full" />
         </VStack>
     );
 };
