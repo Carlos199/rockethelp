@@ -4,8 +4,10 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/
 
 import { THEME } from './src/styles/theme';
 
-import SignIn from './src/screens/SignIn';
-import Loading from './src/screens/components/Loading';
+import Loading from './src/components/Loading';
+import { SignIn } from './src/screens/SignIn';
+
+
 
 export default function App() {
   const [fonstLoaded] = useFonts({Roboto_400Regular, Roboto_700Bold})
