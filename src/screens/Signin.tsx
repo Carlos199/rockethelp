@@ -1,13 +1,15 @@
-import { Text, View } from "react-native";
 
+import {Heading, VStack } from "native-base";
 
-function Signin () {
+function SignIn () {
+
     return (
-        <View>
-            <Text>Hola Carlos</Text>
-            
-        </View>
+        <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={24}>
+           <Heading >
+            Accese a su cuenta
+           </Heading>
+        </VStack>
     );
 };
 
-export default Signin;
+export default SignIn;
