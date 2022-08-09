@@ -21,11 +21,19 @@ export function Home() {
     const {colors} = useTheme()
 
     const navigation = useNavigation()
+/**
+ * It navigates to the new page
+ */
 
     function handleNewOrder(){
      navigation.navigate('new')
     }
 
+    /**
+     * The function takes in an orderId as a parameter, and then navigates to the details screen,
+     * passing in the orderId as a parameter
+     * @param {string} orderId - The id of the order that was clicked.
+     */
     function handleOpenDetails(orderId: string){
       navigation.navigate('details', {orderId})
     }
