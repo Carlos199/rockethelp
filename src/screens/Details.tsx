@@ -129,7 +129,7 @@ firestore()
 
       <CardDetails 
         title='descriccion del problema'
-        description={`Patrimonio ${order.description}`}
+        description={`${order.description}`}
         icon={ClipboardText}
         />
 

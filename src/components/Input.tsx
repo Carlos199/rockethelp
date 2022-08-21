@@ -3,7 +3,7 @@ import { Input as NativeBaseInput, IInputProps } from 'native-base';
 export function Input({...rest} : IInputProps) {
   return (
     <NativeBaseInput
-       bg="gray.700"
+       bg="gray.600"
        h={14}
        size="md"
        borderWidth={0}
@@ -14,7 +14,7 @@ export function Input({...rest} : IInputProps) {
        _focus={{
         borderWidth: 1,
         borderColor: "green.500",
-        bg: "gray.700"
+        bg: "gray.600"
        }}
        {...rest}
    />
