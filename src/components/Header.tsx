@@ -10,9 +10,13 @@ export function Header({title, ...rest}: Props) {
     const {colors} = useTheme()
     const navigation = useNavigation()
 
+   /**
+    * It goes back to the previous page.
+    */
     function handleGoBack(){
       navigation.goBack()
     }
+
   return (
     <HStack
     w="full"

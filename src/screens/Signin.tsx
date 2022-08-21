@@ -17,6 +17,9 @@ export function SignIn () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+   /**
+    * A function that handles the login of the user.
+    */
     function handleSignIn (){
        if(!email || !password){
         return Alert.alert('Entrar', 'Escriba el email y contraseña')

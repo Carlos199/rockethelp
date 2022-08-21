@@ -1,7 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { Center, FlatList, Heading, HStack, IconButton, Text, useTheme, VStack } from 'native-base';
 import { ChatTeardropText, SignOut } from 'phosphor-react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import firestore from '@react-native-firebase/firestore'
 
 import auth from '@react-native-firebase/auth'
 
@@ -10,17 +12,13 @@ import { Button } from '../components/Button';
 import { Filter } from '../components/Filter';
 import { Orders, OrderProps } from '../components/Orders';
 import { Alert } from 'react-native';
+import { dateFormat } from '../utils/firestoreDateFormat';
+import Loading from '../components/Loading';
 
 export function Home() {
+   const [isLoading, setIsLoading] = useState(false)
     const [statusSelected, setStatusSelected] = useState<'open'| 'closed'>('open')
-    const [orders, setOrders] = useState<OrderProps[]>([
-      {
-        id: '123',
-        patrimony: '12345',
-        when: '18/07/2022 as 14:00',
-        status: 'open'
-      }
-    ])
+    const [orders, setOrders] = useState<OrderProps[]>([])
     const {colors} = useTheme()
 
     const navigation = useNavigation()
@@ -41,6 +39,9 @@ export function Home() {
       navigation.navigate('details', {orderId})
     }
 
+   /**
+    * It logs out the user from the app.
+    */
     function handleLogout(){
       auth().signOut()
       .catch(error => {
@@ -48,6 +49,32 @@ export function Home() {
         return Alert.alert('Salir', 'No fue posible cerrar sesión')
       })
     }
+
+    useEffect(()=>{
+      setIsLoading(true)
+
+      /* A function that is called when the component is mounted. It is a listener that is listening to
+      the firestore database. */
+      const subscriber = firestore()
+      .collection('orders')
+      .where('status', '==', statusSelected)
+      .onSnapshot(snapshot =>{
+        const data = snapshot.docs.map(doc =>{
+          const {patrimony, description, status,created_at} = doc.data()
+          return{
+            id: doc.id,
+            patrimony,
+            description,
+            status,
+            when: dateFormat(created_at)
+            
+          }
+        })
+        setOrders(data)
+        setIsLoading(false)
+      })
+      return subscriber
+    },[statusSelected])
 
   return (
     <VStack flex={1} pb={6} bg="gray.700">
@@ -91,6 +118,7 @@ export function Home() {
         isActive={statusSelected === 'closed'}
         />
       </HStack>
+      {isLoading ? <Loading /> : 
       <FlatList 
       data={orders}
       keyExtractor={item => item.id}
@@ -106,7 +134,7 @@ export function Home() {
         </Center>
       )}
       />
-
+}
       <Button title='Nueva Solicitud' onPress={handleNewOrder}/>
       </VStack>
    </VStack>
